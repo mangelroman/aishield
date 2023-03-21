@@ -24,15 +24,11 @@ function hasBannedKeyword(text) {
 
 function createBlocker(form) {
   return (event) => {
-    console.log("EVENT", event);
     if (isRestrictedDomain()) {
-      console.log("RESTRICTED FORM", form);
       const formElements = form.elements;
       for (let i = 0; i < formElements.length; i++) {
         const element = formElements[i];
-        console.log("TAGNAME=", element.tagName)
         if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
-          console.log("TEXT AREA: ", element)
           if (hasBannedKeyword(element.value)) {
             event.preventDefault();
             alert("Your submission contains banned keywords. Please remove them before submitting.");
@@ -48,10 +44,8 @@ function init() {
   const forms = document.querySelectorAll('form');
 
   for (const form of forms) {
-    console.log("FORM FOUND: ", form)
     buttons = form.querySelectorAll('button')
     for (const button of buttons) {
-      console.log("BUTTON FOUND: ", button)
       form.addEventListener('click', createBlocker(form));
     }
   }
